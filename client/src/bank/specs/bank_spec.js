@@ -54,4 +54,17 @@ describe('bank', function() {
     bank.payInterestOnAccount( mockAccount );
     assert.equal( 110, mockAccount.amount );
   });
+  it("should pay interest on all accounts", function() {
+    var bank = new Bank();
+    var mockAccount1 = { amount: 100 };
+    var mockAccount2 = { amount: 90 };
+    var mockAccount3 = { amount: 130 };
+    bank.addAccount( mockAccount1 );
+    bank.addAccount( mockAccount2 );
+    bank.addAccount( mockAccount3 );
+    bank.payInterestOnAllAccounts();
+    assert.equal( 110, mockAccount1.amount );
+    assert.equal( 99, mockAccount2.amount );
+    assert.equal( 143, mockAccount3.amount );
+  });
 });

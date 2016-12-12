@@ -34,9 +34,14 @@ Bank.prototype = {
   accountAverage:function() {
     return this.totalCash()/this.accounts.length;
   },
-  payInterestOnAccount: function( account ) {
+  payInterestOnAccount:function( account ) {
     newAmount = account.amount * 1.1;
     account.amount = newAmount.toFixed( 2 );
+  },
+  payInterestOnAllAccounts:function() {
+    this.accounts.forEach( function( account ) {
+      this.payInterestOnAccount( account );
+    }.bind( this ) );
   }
 };
 
