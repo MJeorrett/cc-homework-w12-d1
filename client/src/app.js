@@ -21,4 +21,10 @@ window.onload = function() {
 
   var bankView = new BankView( bank );
   bankView.renderAccounts();
+
+  var payInterestButton = document.querySelector( '#pay-interest-button' );
+  payInterestButton.onclick = function() {
+    bank.payInterestOnAllAccounts();
+    bankView.renderAccounts();
+  };
 };
