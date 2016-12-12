@@ -9,15 +9,12 @@ window.onload = function() {
   var bank = new Bank();
   console.log( "bank:", bank );
 
-  for( accountData of sampleAccounts ) {
-    bank.addAccount( new Account( accountData ) );
+  var accounts = getStoredAccounts() || sampleAccounts;
+
+  for( account of accounts ) {
+    bank.addAccount( new Account( account ) );
   }
   console.log( "accounts:", bank.accounts );
-
-  var bank = new Bank();
-  sampleAccounts.forEach( function( account ) {
-    bank.addAccount( account );
-  });
 
   var bankView = new BankView( bank );
   bankView.renderAccounts();
@@ -26,5 +23,12 @@ window.onload = function() {
   payInterestButton.onclick = function() {
     bank.payInterestOnAllAccounts();
     bankView.renderAccounts();
+    localStorage.accounts = JSON.stringify( bank.accounts );
   };
 };
+
+var getStoredAccounts = function() {
+  var accountsString = localStorage.accounts;
+  if ( accountsString ) return JSON.parse( accountsString );
+  return null;
+}
