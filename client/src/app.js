@@ -1,5 +1,6 @@
 var Bank = require('./bank/bank.js');
 var Account = require('./bank/account.js');
+var BankView = require('./views/bankView.js');
 var sampleAccounts = require('../sample.json');
 
 window.onload = function() {
@@ -13,42 +14,5 @@ window.onload = function() {
   }
   console.log( "accounts:", bank.accounts );
 
-  var totalDisplay = document.querySelector( '#total' );
-  setTotal( totalDisplay, bank.totalCash() );
-
-  var accountsList = document.querySelector( '#accounts' );
-  populateAccounts( accountsList, bank.accounts );
-
-  // DOM ELEMENTS
-  var businessTotalDisplay = document.querySelector( '#business-total' );
-  var businessAccountsDisplay = document.querySelector( '#business-accounts' );
-  var personalTotalDisplay = document.querySelector( '#personal-total' );
-  var personalAccountsDisplay = document.querySelector( '#personal-accounts' );
-
-  // ACCOUNTS
-  var businessAccounts = bank.filteredAccounts( 'business' );
-  var personalAccounts = bank.filteredAccounts( 'personal' );
-
-  setTotal( businessTotalDisplay, bank.totalCash( 'business' ) );
-  populateAccounts( businessAccountsDisplay, businessAccounts );
-  setTotal( personalTotalDisplay, bank.totalCash( 'personal' ) );
-  populateAccounts( personalAccountsDisplay, personalAccounts );
+  var bankView = new BankView( sampleAccounts );
 };
-
-var populateAccounts = function( ulElement, accountsList ) {
-  for( account of accountsList ) {
-    var accountP = document.createElement( 'p' );
-    accountP.innerText = account.owner + ": " + getCashString( account.amount );
-    accountLi = document.createElement( 'li' );
-    accountLi.appendChild( accountP );
-    ulElement.appendChild( accountLi );
-  }
-}
-
-var setTotal = function( htmlElement, amount ) {
-  htmlElement.innerText = "Total: £" + getCashString( amount );
-}
-
-var getCashString = function( value ) {
-  return "£" + value.toFixed( 2 );
-}
