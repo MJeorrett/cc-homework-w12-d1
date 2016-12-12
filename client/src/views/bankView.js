@@ -1,9 +1,9 @@
 var BankView = function( bank ) {
-
-  var data = [
+  this.bank = bank;
+  this.viewGroups = [
     {
       title: "All",
-      accountType: '',
+      accountType: null,
       listElement: document.querySelector( '#all-list' ),
       totalElement: document.querySelector( '#all-total' )
     },
@@ -20,10 +20,24 @@ var BankView = function( bank ) {
       totalElement: document.querySelector( '#personal-total' )
     }
   ];
-  console.log( "data:", data );
+  console.log( "viewGroups:", this.viewGroups );
+};
+
+BankView.prototype = {
+  renderAccounts: function() {
+    this.viewGroups.forEach( function( viewGroup ) {
+      console.log("bank:", this.bank );
+      var accountType = viewGroup.accountType;
+      var accounts = this.bank.filteredAccounts( accountType );
+      var total = this.bank.totalCash( accountType );
+      populateAccounts( viewGroup.listElement, accounts );
+      setTotal( viewGroup.totalElement, total );
+    }.bind( this ) );
+  }
 };
 
 var populateAccounts = function( ulElement, accountsList ) {
+  ulElement.innerHTML = "";
   for( account of accountsList ) {
     var accountP = document.createElement( 'p' );
     accountP.innerText = account.owner + ": " + getCashString( account.amount );
@@ -31,14 +45,14 @@ var populateAccounts = function( ulElement, accountsList ) {
     accountLi.appendChild( accountP );
     ulElement.appendChild( accountLi );
   }
-}
+};
 
 var setTotal = function( htmlElement, amount ) {
   htmlElement.innerText = "Total: £" + getCashString( amount );
-}
+};
 
 var getCashString = function( value ) {
   return "£" + value.toFixed( 2 );
-}
+};
 
 module.exports = BankView;

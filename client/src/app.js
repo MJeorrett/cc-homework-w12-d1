@@ -14,5 +14,11 @@ window.onload = function() {
   }
   console.log( "accounts:", bank.accounts );
 
-  var bankView = new BankView( sampleAccounts );
+  var bank = new Bank();
+  sampleAccounts.forEach( function( account ) {
+    bank.addAccount( account );
+  });
+
+  var bankView = new BankView( bank );
+  bankView.renderAccounts();
 };
