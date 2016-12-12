@@ -26,7 +26,6 @@ var BankView = function( bank ) {
 BankView.prototype = {
   renderAccounts: function() {
     this.viewGroups.forEach( function( viewGroup ) {
-      console.log("bank:", this.bank );
       var accountType = viewGroup.accountType;
       var accounts = this.bank.filteredAccounts( accountType );
       var total = this.bank.totalCash( accountType );
@@ -48,7 +47,7 @@ var populateAccounts = function( ulElement, accountsList ) {
 };
 
 var setTotal = function( htmlElement, amount ) {
-  htmlElement.innerText = "Total: £" + getCashString( amount );
+  htmlElement.innerText = "Total: " + getCashString( amount );
 };
 
 var getCashString = function( value ) {
