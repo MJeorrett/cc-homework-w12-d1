@@ -36,7 +36,7 @@ Bank.prototype = {
   },
   payInterestOnAccount:function( account ) {
     newAmount = account.amount * 1.1;
-    account.amount = newAmount.toFixed( 2 );
+    account.amount = parseFloat( newAmount.toFixed( 2 ) );
   },
   payInterestOnAllAccounts:function() {
     this.accounts.forEach( function( account ) {
