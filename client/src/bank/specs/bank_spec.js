@@ -48,4 +48,10 @@ describe('bank', function() {
     bank.addAccount(account3);
     assert.equal( 200, bank.totalCash('business') );
   });
+  it("should increase amount of account passed to payInterestOnAccount() by 10%", function() {
+    var bank = new Bank();
+    var mockAccount = { amount: 100 };
+    bank.payInterestOnAccount( mockAccount );
+    assert.equal( 110, mockAccount.amount );
+  });
 });
